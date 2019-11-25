@@ -1,0 +1,27 @@
+<resources>
+
+    <declare-styleable name="HistogramView">
+        <attr name="gridColor" format="color"/>
+        <attr name="binColor" format="color"/>
+        <attr name="binCapColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="MeterView">
+        <attr name="marksColor" format="color"/>
+        <attr name="levelGradient" format="reference"/>
+        <attr name="meterBackground" format="color"/>
+        <attr name="levelTextColor" format="color"/>
+        <attr name="peakLineColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="Indicators">
+        <attr name="indicatorsBackground" format="reference|color"/>
+        <attr name="indicatorsTextColor" format="reference|color"/>
+        <attr name="indicatorsLineColor" format="reference|color"/>
+        <attr name="indicatorsBackgroundInactive" format="reference|color"/>
+        <attr name="indicatorsBackgroundWarning" format="reference|color"/>
+        <attr name="indicatorsBackgroundOk" format="reference|color"/>
+    </declare-styleable>
+
+
+</resources>

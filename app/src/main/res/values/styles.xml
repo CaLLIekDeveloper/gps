@@ -1,0 +1,46 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Day" parent="android:Theme.Holo.Light.NoActionBar">
+        <item name="binColor">#7BAD42</item>
+        <item name="gridColor">#EEEEEE</item>
+        <item name="marksColor">#6A6A6A</item>
+        <item name="levelGradient">@drawable/level_gradient_day</item>
+        <item name="indicatorsTextColor">#000000</item>
+        <item name="levelTextColor">#6A6A6A</item>
+        <item name="peakLineColor">#FF0000</item>
+        <item name="indicatorsLineColor">#AAAAAA</item>
+        <item name="indicatorsBackgroundInactive">#888888</item>
+        <item name="indicatorsBackgroundWarning">#ffff3317</item>
+        <item name="indicatorsBackgroundOk">#ff28a32f</item>
+        <item name="meterBackground">#FFFFFF</item>
+    </style>
+
+    <style name="Night" parent="android:Theme.Holo.NoActionBar">
+        <item name="binColor">#0A0A0A</item>
+        <item name="gridColor">#222222</item>
+        <item name="meterBackground">#000000</item>
+        <item name="marksColor">#222222</item>
+        <item name="levelGradient">@drawable/level_gradient_night</item>
+        <item name="indicatorsTextColor">#484848</item>
+        <item name="levelTextColor">#484848</item>
+        <item name="peakLineColor">#414141</item>
+        <item name="indicatorsLineColor">#222222</item>
+        <item name="indicatorsBackgroundInactive">#888888</item>
+        <item name="indicatorsBackgroundWarning">#ffff3317</item>
+        <item name="indicatorsBackgroundOk">#000000</item>
+    </style>
+
+    <style name="Day_TitleBar" parent="android:Theme.Holo.Light">
+    </style>
+
+    <style name="Night_TitleBar" parent="android:Theme.Holo">
+    </style>
+</resources>

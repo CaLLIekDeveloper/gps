@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="whiteText">#FFFF00</color>
+    <color name="errorTextColor">#FFE00000</color>
+    <color name="layoutHeaderBackground">#333333</color>
+    <color name="layoutSecondaryHeaderBackground">#222222</color>
+    <color name="secondaryText">#AAAAAA</color>
+    <color name="secondaryBlueText">#46AEFF</color>
+    <color name="attEnabledText">#DB9A1A</color>
+    <color name="attDisabledText">#BABABA</color>
+    <color name="deviceInfoSelectedBandColor">#FF00C000</color>
+</resources>

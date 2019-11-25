@@ -1,0 +1,134 @@
+<resources>
+    <string name="provider_gps">GPS</string>
+    <string name="provider_network">Network</string>
+    <string name="location_settings">Location settings</string>
+
+    <string name="need_permisions">Требуеться разрешение</string>
+
+
+    <string name="app_name">VaranDF&#x2074;</string>
+    <string name="tune_title">TunerDF</string>
+    <string name="dialog_change_channel_title">Выбор канала</string>
+    <string name="OK">OK</string>
+    <string name="cancel">Отмена</string>
+    <string name="dialog_change_channel_digits_only">Только цифры разрешены</string>
+    <string name="dialog_change_channel_wrong_number">Неверный формат числа</string>
+    <string name="connecting_try_in_a_few_seconds">Идет подключение. Попробуйте через пару секунд.</string>
+    <string name="toast_channel_changed">Канал: %1$d (%2$s)\nЧастота BS = %3$.1f MHz\nЧастота MS = %4$.1f MHz</string>
+    <string name="external_antenna_enabled">Внешняя антенна включена</string>
+    <string name="internal_antenna_enabled">Внутренняя антенна включена</string>
+    <string name="cannot_switch_antenna">Не удалось переключить антенну</string>
+    <string name="bluetooth_was_not_enabled">Bluetooth не был включен</string>
+    <string name="bluetooth_is_not_supported">Bluetooth не поддерживается</string>
+    <string name="change_varan">&lt;u&gt;Сменить устройство?&lt;/u&gt;</string>
+    <string name="change_varan_menu">Сменить устройство</string>
+    <string name="connecting_to">Подключение к «%1$s»</string>
+    <string name="unknown_device">Неизвестное устройство</string>
+    <string name="cant_connect">Не удалось подключиться</string>
+    <string name="device_was_not_selected">Не выбрано устройство</string>
+    <string name="connection_was_canceled">Подключение отменено</string>
+    <string name="discovery_started">Поиск Bluetooth-устройств</string>
+    <string name="discovery_finished">Сканирование завершено</string>
+    <string name="device_list_activity_title_scanning">Выберите устройство (идет поиск…)</string>
+    <string name="device_list_activity_title">Выберите устройство</string>
+    <string name="loading_factors">Загрузка коэффициентов…</string>
+    <string name="speed">Скорость данных</string>
+    <string name="night_mode">День/Ночь</string>
+    <string name="speed_super_slow">Самая медленная</string>
+    <string name="speed_slow">Медленная</string>
+    <string name="speed_fast">Быстрая</string>
+    <string name="speed_super_fast">Самая быстрая</string>
+    <string name="connection_failed">Связь потеряна</string>
+    <string name="attenuator_icon">ATT</string>
+    <string name="refresh">Обновить</string>
+    <string name="are_you_sure_to_exit">Выйти?</string>
+
+    <!-- Диалог с информацией -->
+    <string name="info">Инфо</string>
+    <string name="info_title">Информация</string>
+
+    <string name="info_varan_name">Имя устройства: %1$s</string>
+    <string name="info_varan_name_1">Имя устройства:</string>
+    <string name="info_varan_address">Адрес устройства: %1$s</string>
+    <string name="info_varan_address_1">Адрес устройства:</string>
+    <string name="info_varan_network_standard">Стандарт устройства: %1$s</string>
+    <string name="info_app_version">Версия Android программы: %1$s</string>
+    <string name="info_app_version_1">Версия Android\nпрограммы:</string>
+    <string name="info_varan_firmware_version">Версия прошивки: %1$s</string>
+    <string name="info_varan_firmware_version_1">Версия прошивки:</string>
+    <string name="info_varan_hardware_modificator">Модификатор устройства: %1$s</string>
+    <string name="info_varan_hardware_modificator_1">Модификатор\nустройства:</string>
+    <string name="info_current_channel">Канал: %1$s (%2$s)</string>
+    <string name="info_current_channel_1">Канал:</string>
+    <string name="info_frequencies_message_bs">Частота BS (downlink) = %1$.2f MHz</string>
+    <string name="info_frequencies_message_ms">Частота MS (uplink) = %1$.2f MHz</string>
+    <string name="info_frequencies_message_bs_1">Частота BS (downlink)</string>
+    <string name="info_frequencies_message_ms_1">Частота MS (uplink)</string>
+    <string name="timeout_toast">Проверьте соединение</string>
+    <string name="battery_log">Время работы</string>
+    <string name="today">Сегодня</string>
+    <string name="yesterday">Вчера</string>
+    <string name="sec">с</string>
+    <string name="min">мин</string>
+    <string name="device">Устройство</string>
+    <string name="no_battery_log">Нет информации о времени работы (появится при следующем запуске).</string>
+    <string name="cant_create_log_file">Информация об использовании батареи недоступна. Возможно, отсутствует карта памяти в телефоне</string>
+    <string name="cant_show_battery_log">Отсутствует карта памяти в телефоне. Информация об использовании батареи недоступна.</string>
+    <string name="battery">Батарея</string>
+    <string name="sound">Звуковой уровень</string>
+    <string name="voice">Голос</string>
+    <string name="voice_description">Периодически проговаривать значения уровня голосом</string>
+    <string name="settings">Настройки</string>
+    <string name="sound_fx">Звуковой эффект</string>
+    <string name="sound_fx_description">Озвучивание уровня сигнала</string>
+    <string name="silent_mode">Тихий режим</string>
+    <string name="silent_mode_description">Любые звуки будут слышны только в наушниках</string>
+    <string name="silent_mode_warning">Тихий режим активен: звук только в наушниках</string>
+    <string name="unsupported_firmware_version">Версия прошивки не поддерживается</string>
+    <string name="update_device_firmware">Обновите прошивку доводчика до последней версии</string>
+    <string name="detecting_firmware_version">Определение версии устройства…</string>
+    <string name="dialog_connection_retry_connection_failed_retry">Подключение неудачно. Подключиться снова?</string>
+    <string name="dialog_connection_use_secure_connection">Использовать безопасное соединение (PIN: 0000)</string>
+    <string name="secure_connection">Безопасное подключение</string>
+    <string name="disable_if_connections_failed">Включите, если смартфон не подключается к устройству (PIN: 0000)</string>
+    <string name="connection_error">Ошибка подключения</string>
+    <string name="audio_files_not_load_properly">Некоторые аудио файлы не были загружены.</string>
+    <string name="not_available">Н/Д</string>
+    <string name="wrong_channel">Неверный номер %1$s канала</string>
+    <string name="battery_logging_description">Включите чтобы вести статистику использования батареи</string>
+    <string name="battery_logging">Статистика батареи</string>
+    <string name="yes">Да</string>
+    <string name="band">Диапазон:</string>
+    <string name="channel">Канал:</string>
+    <string name="current_channel">Текущий канал</string>
+    <string name="factors">Коэффициенты</string>
+    <string name="supported_bands">Поддерживаемые диапазоны</string>
+    <string name="selectedBands">Выбранные диапазоны</string>
+    <string name="noBandsToSelect">Нет диапазонов</string>
+    <string name="device_version">Версия ПО</string>
+    <string name="amp">Усилитель:</string>
+    <string name="att">Аттенюатор:</string>
+    <string name="serial_number">Серийный номер: %1$s</string>
+    <string name="serial_number_1">Серийный номер:</string>
+    <string name="product_number">Номер изделия: %1$s</string>
+    <string name="product_number_1">Номер изделия:</string>
+    <string name="band_channels" formatted="false"><![CDATA[%d канал (%s) = %.2f MHz<br/>%d канал (%s) = %.2f MHz]]></string>
+    <string name="band_channels_1" formatted="false"><![CDATA[%d канал (%s)]]></string>
+    <string name="band_channels_no_link_1" formatted="false"><![CDATA[%d канал]]></string>
+    <string name="current_session">Текущая сессия:\n</string>
+    <string name="hours">ч</string>
+    <string name="estimate">. Осталось: %s</string>
+    <string name="General">Общие</string>
+    <string name="band_channels_no_link" formatted="false"><![CDATA[%d канал = %.2f MHz<br/>%d канал = %.2f MHz]]></string>
+    <string name="invalidCrcMessage">Возможно, устройство не откалибровано</string>
+    <string name="invalidCrcChangeDevice">Сменить устройство</string>
+    <string name="invalidCrcContinue">Продолжить</string>
+    <string name="selectAllBands">Выбрать все</string>
+    <string name="unselectAllBands">Отменить все</string>
+    <string name="atLeastOneBandMustSelected">Должен быть выбран\nхотя бы один диапазон</string>
+    <string name="band_channels_2"><![CDATA[%.2f MHz]]></string>
+    <string name="info_frequencies_format">%1$.2f MHz</string>
+    <string name="infoDeviceBandTableColumn1">Имя</string>
+    <string name="infoDeviceBandTableColumn3">RX (DL)</string>
+    <string name="infoDeviceBandTableColumn2">TX (UL)</string>
+</resources>

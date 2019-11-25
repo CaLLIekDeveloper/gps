@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<dimen name="paddingAndMarginStepX0.5">8dp</dimen>-->
+    <dimen name="paddingAndMarginStepX1">16dp</dimen>
+    <!--<dimen name="paddingAndMarginStepX1.5">24dp</dimen>-->
+    <dimen name="paddingAndMarginStepX2">32dp</dimen>
+    <dimen name="mainlinearlayoutchannelSmallTextSize">10sp</dimen>
+    <dimen name="mainlinearlayoutchannelLargeTextSize">25sp</dimen>
+</resources>
