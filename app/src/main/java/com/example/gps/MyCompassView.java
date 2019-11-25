@@ -44,7 +44,7 @@ public class MyCompassView extends View {
         paint.setColor(Color.DKGRAY);
         paint.setTextSize(25);
 
-        p1.setColor(Color.GREEN);
+        p1.setColor(0xFF3F8BBA);
         p1.setStyle(Paint.Style.FILL_AND_STROKE);
         p1.setStrokeWidth(3);
         firstDraw = true;
@@ -59,8 +59,7 @@ public class MyCompassView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 // TODO Auto-generated method stub
-        Log.e("width",""+getMeasuredWidth());
-        Log.e("hright",""+getMeasuredHeight());
+        Log.e("direction",""+direction);
         int cxCompass = getMeasuredWidth()/2;
         int cyCompass = getMeasuredHeight()/2;
         float radiusCompass;

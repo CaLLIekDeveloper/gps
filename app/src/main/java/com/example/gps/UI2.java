@@ -33,8 +33,6 @@ import java.util.TimerTask;
 public class UI2 extends AppCompatActivity {
 
     private MyCompassView myCompassView;
-
-    private Compass mCompass;
     Message message;
     Message message2;
     SensorManager pressureSensorManager;
@@ -86,10 +84,6 @@ public class UI2 extends AppCompatActivity {
 //change
         gps.setText("Получаю координаты");
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        TextView angle = findViewById(R.id.angle);
-//change
-        angle.setText("Получаю азимут");
-        mCompass = new Compass(this, angle);
         initSensors();
     }
 
@@ -327,16 +321,11 @@ public class UI2 extends AppCompatActivity {
         Log.e("onDestroy",""+hasPermissions(this,PERMISSIONS));
 
         if(hasPermissions(this,PERMISSIONS)) {
-            unRegisterListeners();
             locationManager.removeUpdates(locationListener);
             myTimer.cancel();
         }
     }
 
-    private void unRegisterListeners()
-    {
-        mCompass.unregisterListener();
-    }
 
     private static final String[] PERMISSIONS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -399,7 +388,6 @@ public class UI2 extends AppCompatActivity {
         if (location == null)
             return;
 
-        TextView tv = findViewById(R.id.angle);
 
         if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
             gps.setText(formatLocation(location));
@@ -411,8 +399,7 @@ public class UI2 extends AppCompatActivity {
             message.longitude=""+location.getLongitude();
             message.altitude=""+location.getAltitude();
             message.type=1;
-            message.azimuth = ""+location.getBearing();
-            tv.setText("Угол " + location.getBearing());
+            message.azimuth = ""+myCompassView.direction;
         } else if (location.getProvider().equals(
 
                 LocationManager.NETWORK_PROVIDER)) {
@@ -425,10 +412,8 @@ public class UI2 extends AppCompatActivity {
                 location.getAccuracy();
                 message2.type=2;
                 message2.azimuth = ""+myCompassView.direction;
-                tv.setText("Угол " + myCompassView.direction);
             }
             //tvLocationNet.setText(formatLocation(location));
-            tv.setText("Угол " + location.getBearing());
         }
         Double at = location.getAltitude();
         Log.e("at",""+at);

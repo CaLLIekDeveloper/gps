@@ -3,7 +3,7 @@
     <string name="provider_network">Network</string>
     <string name="location_settings">Location settings</string>
 
-    <string name="need_permisions">Требуеться разрешение</string>
+    <string name="need_permissions">Требуется разрешение</string>
 
 
     <string name="app_name">VaranDF&#x2074;</string>
