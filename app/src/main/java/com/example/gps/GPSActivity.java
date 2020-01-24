@@ -142,7 +142,6 @@ public class GPSActivity extends AppCompatActivity {
         } else if (location.getProvider().equals(
                 LocationManager.NETWORK_PROVIDER)) {
             tvLocationNet.setText(formatLocation(location));
-            tv.setText(""+location.getBearing());
         }
 
 

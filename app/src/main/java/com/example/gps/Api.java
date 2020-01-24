@@ -1,6 +1,4 @@
 package com.example.gps;
-
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -14,9 +12,9 @@ import java.net.URLEncoder;
 public class Api extends AsyncTask<String,Void,String> {
     protected  void onPreExecute() { }
 
+    //https://parshyn.000webhostapp.com/
     @Override
     protected String doInBackground(String... arg0) {
-            //add
             try {
                 String link = "https://parshyn.000webhostapp.com/add.php?q="+ URLEncoder.encode(arg0[1], "UTF-8");
                 Log.e("URL", link);
@@ -25,7 +23,6 @@ public class Api extends AsyncTask<String,Void,String> {
                 conn.setDoOutput(true);
                 OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
 
-                //wr.write(data);
                 wr.flush();
 
                 BufferedReader reader =
@@ -33,7 +30,6 @@ public class Api extends AsyncTask<String,Void,String> {
                 String line = null;
                 while ((line = reader.readLine()) != null) {
                     Log.d("Answer ", line);
-                    //String[] parts = line.split("[|]");
                     break;
                 }
 

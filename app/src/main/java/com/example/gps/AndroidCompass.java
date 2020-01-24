@@ -17,7 +17,6 @@ public class AndroidCompass extends Activity {
     private boolean sersorrunning;
     private MyCompassView myCompassView;
 
-    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

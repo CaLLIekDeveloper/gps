@@ -4,10 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 public class MyCompassView extends View {
@@ -17,23 +15,20 @@ public class MyCompassView extends View {
     private Paint p1 = new Paint(Paint.ANTI_ALIAS_FLAG);
     private boolean firstDraw;
 
-    private int type = 1;
+    private boolean typeDirectionNorth = true;
 
     public MyCompassView(Context context) {
         super(context);
-// TODO Auto-generated constructor stub
         init();
     }
 
     public MyCompassView(Context context, AttributeSet attrs) {
         super(context, attrs);
-// TODO Auto-generated constructor stub
         init();
     }
 
     public MyCompassView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-// TODO Auto-generated constructor stub
         init();
     }
 
@@ -52,45 +47,32 @@ public class MyCompassView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-// TODO Auto-generated method stub
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-// TODO Auto-generated method stub
-        Log.e("direction",""+direction);
         int cxCompass = getMeasuredWidth()/2;
         int cyCompass = getMeasuredHeight()/2;
         float radiusCompass;
 
+        float scaleRadius = 0.8f;
         if(cxCompass > cyCompass){
-            radiusCompass = (float) (cyCompass * 0.9);
+            radiusCompass = cyCompass * scaleRadius;
         }
         else{
-            radiusCompass = (float) (cxCompass * 0.9);
+            radiusCompass = cxCompass * scaleRadius;
         }
-        //canvas.drawCircle(cxCompass, cyCompass, radiusCompass, paint);
 
         if(!firstDraw){
-            /*
-            canvas.drawLine(cxCompass, cyCompass,
-                    (float)(cxCompass + radiusCompass * Math.sin((double)(-direction) * 3.14/180)),
-                    (float)(cyCompass - radiusCompass * Math.cos((double)(-direction) * 3.14/180)),
-                    paint);
-            */
-
             final RectF oval = new RectF();
 
             float x1 = radiusCompass+5;
             float y1 = radiusCompass+10;
 
             oval.set(x1 - radiusCompass, y1 - radiusCompass, x1 + radiusCompass, y1+ radiusCompass);
-            //oval.set(cxCompass, cyCompass, (float)(cxCompass + radiusCompass * Math.sin((double)(-direction) * 3.14/180)), (float)(cyCompass - radiusCompass * Math.cos((double)(-direction) * 3.14/180)));
             int sweep = 45;
             float startPosition = 270 - direction - (sweep/2);
-
-            //int startAngle = (int) (180 / Math.PI * Math.atan2(start, start));
 
             canvas.drawArc(oval,startPosition, sweep,true,p1);
 

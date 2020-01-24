@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,9 +18,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +36,6 @@ public class UI2 extends AppCompatActivity {
 
     private MyCompassView myCompassView;
     Message message;
-    Message message2;
     SensorManager pressureSensorManager;
     SensorManager temperatureSensorManager;
 
@@ -43,7 +44,7 @@ public class UI2 extends AppCompatActivity {
     TextView gps;
     private LocationManager locationManager;
 
-    final java.util.Timer myTimer = new Timer();
+    final MyTimer myTimer = new MyTimer();
 
     public void requestPermissions() {
         ActivityCompat.requestPermissions(this, PERMISSIONS, 1);
@@ -61,23 +62,47 @@ public class UI2 extends AppCompatActivity {
         return true;
     }
 
+    private static final int   SENT     = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("create","create");
         Log.e("onCreate",""+hasPermissions(this,PERMISSIONS));
         setContentView(R.layout.activity_ui2);
-        message = new Message();
-        message2 = new Message();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(!hasPermissions(this,PERMISSIONS))requestPermissions();
-        }
+        firstInit();
     }
 
     private void firstInit()
     {
+        message = new Message();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(!hasPermissions(this,PERMISSIONS))requestPermissions();
+        }
+        Button btnSendMessage = findViewById(R.id.btn_send_message);
+        Button btnSendDataMessage = findViewById(R.id.btn_send_data_message);
+        final TextView textView = findViewById(R.id.message);
+
+        btnSendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("Message ",message.getSql());
+                textView.setText(message.getSql());
+                sendSMS();
+            }
+        });
+
+        btnSendDataMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("Message ",message.getSql());
+                textView.setText(message.getSql());
+                sendDataSms();
+            }
+        });
+
+
+
         message.name = getDeviceId();
-        message2.name = message.name;
         myCompassView = findViewById(R.id.mycompassview);
 
         gps = findViewById(R.id.gps);
@@ -85,6 +110,56 @@ public class UI2 extends AppCompatActivity {
         gps.setText("Получаю координаты");
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         initSensors();
+    }
+
+    private void sendSMS()
+    {
+        PendingIntent sent = this.createPendingResult(SENT, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT);
+        String messageText = message.getSql();
+        String phoneNumber = "+380504205770";
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(phoneNumber, null, messageText, null, null);
+    }
+
+    //https://stackoverflow.com/questions/3757229/how-to-send-and-receive-data-sms-messages
+    //http://wiebe-elsinga.com/blog/sending-and-receiving-data-sms-messages-with-android/
+    //https://codetheory.in/android-sms/
+    private void sendDataSms()
+    {
+        short SMS_PORT = 8901;
+        PendingIntent sent = this.createPendingResult(SENT, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT);
+        String messageText = message.getSql();
+        String phoneNumber = "+380504205770";
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendDataMessage(phoneNumber, null, SMS_PORT, messageText.getBytes(), sent, null);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String toast = null;
+        switch (requestCode) {
+            case SENT:
+                switch (resultCode) {
+                    case RESULT_OK:
+                        toast = "OK";
+                        break;
+                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+                        toast = "Generic Failure";
+                        break;
+                    case SmsManager.RESULT_ERROR_RADIO_OFF:
+                        toast = "Radio Off";
+                        break;
+                    case SmsManager.RESULT_ERROR_NULL_PDU:
+                        toast = "Null Pdu";
+                        break;
+                }
+                break;
+        }
+        if (toast != null) {
+            Toast.makeText(this, toast, Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void initSensors()
@@ -123,6 +198,7 @@ public class UI2 extends AppCompatActivity {
             @Override
             public void onSensorChanged(SensorEvent event) {
                 // TODO Auto-generated method stub
+                message.azimuth = ""+(int)event.values[0];
                 myCompassView.updateDirection((float) event.values[0]);
 
                 if (event.sensor.getType() == Sensor.TYPE_GRAVITY)
@@ -164,12 +240,9 @@ public class UI2 extends AppCompatActivity {
         };
 
         if (mySensors.size() > 0) {
-            mySensorManager.registerListener(mySensorEventListener, mySensors.get(0), SensorManager.SENSOR_DELAY_NORMAL);
-            //Toast.makeText(this, "Start ORIENTATION Sensor", Toast.LENGTH_LONG).show();
+            mySensorManager.registerListener(mySensorEventListener, mySensors.get(0), SensorManager.SENSOR_DELAY_NORMAL);;
 
         } else {
-
-           //Toast.makeText(this, "No ORIENTATION Sensor", Toast.LENGTH_LONG).show();
             finish();
         }
 
@@ -228,7 +301,6 @@ public class UI2 extends AppCompatActivity {
             }
 
             public void onSensorChanged(SensorEvent event) {
-                // Получаем атмосферное давление в миллибарах
                 double pressure = event.values[0];
                 message.pressure = ""+pressure;
             }
@@ -263,29 +335,29 @@ public class UI2 extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("onResume",""+hasPermissions(this,PERMISSIONS));
+        startTransferData();
+    }
+
+    private void startTransferData()
+    {
         if(hasPermissions(this,PERMISSIONS))
         {
-            firstInit();
-            myTimer.schedule(new TimerTask() { // Определяем задачу
+            if(myTimer.cancelled == true)
+            {
+                myTimer.myTimer = new Timer();
+                myTimer.cancelled = false;
+            }
+
+            myTimer.myTimer.schedule(new TimerTask() { // Определяем задачу
                 @Override
                 public void run() {
-                    Log.e("message onResume",message.getSql());
-                    long answer = (long)1;
+                    Log.e("message onResume",message.type+" "+message.getSql());
                     if(message.type!=0)
                     {
                         new Api().execute("12",message.getSql());
                     }
-                    if(message2.type!=0)
-                    {
-                        new Api().execute("12",message2.getSql());
-                    }
-                    if(answer== -1)
-                    {
-                        myTimer.cancel();
-                    }
                 };
-            }, 1000L, 5L * 1000); // интервал - 20000 миллисекунд,  миллисекунд до первого запуска.
+            }, 1000L, 5L * 1000);
 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -301,35 +373,39 @@ public class UI2 extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e("onPause",""+hasPermissions(this,PERMISSIONS));
-
+        endTransferData();
     }
+
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.e("onStop",""+hasPermissions(this,PERMISSIONS));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        Log.e("onDestroy",""+hasPermissions(this,PERMISSIONS));
+    }
 
+    private void endTransferData()
+    {
         if(hasPermissions(this,PERMISSIONS)) {
             locationManager.removeUpdates(locationListener);
-            myTimer.cancel();
+            myTimer.myTimer.cancel();
+            myTimer.cancelled = true;
         }
     }
 
 
     private static final String[] PERMISSIONS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.SEND_SMS
     };
 
     public String getDeviceId() {
@@ -384,41 +460,29 @@ public class UI2 extends AppCompatActivity {
 
 
     private void showLocation(Location location) {
-
         if (location == null)
             return;
-
 
         if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
             gps.setText(formatLocation(location));
             isEnabledGPS = true;
-            Log.e("GPS", "status: " + formatLocation(location));
-
-
             message.latitude=""+location.getLatitude();
             message.longitude=""+location.getLongitude();
             message.altitude=""+location.getAltitude();
             message.type=1;
-            message.azimuth = ""+myCompassView.direction;
-        } else if (location.getProvider().equals(
-
-                LocationManager.NETWORK_PROVIDER)) {
+            Log.e("GPS AZIMUTH", ""+location.getBearing());
+        }
+        else if (location.getProvider().equals(LocationManager.NETWORK_PROVIDER)) {
             if (!isEnabledGPS)
             {
                 gps.setText(formatLocation(location));
-                message2.latitude=""+location.getLatitude();
-                message2.longitude=""+location.getLongitude();
-                message2.altitude=""+location.getAltitude();
+                message.latitude=""+location.getLatitude();
+                message.longitude=""+location.getLongitude();
+                message.altitude=""+location.getAltitude();
                 location.getAccuracy();
-                message2.type=2;
-                message2.azimuth = ""+myCompassView.direction;
+                message.type=2;
             }
-            //tvLocationNet.setText(formatLocation(location));
         }
-        Double at = location.getAltitude();
-        Log.e("at",""+at);
-        Log.e("direction",""+myCompassView.direction);
-
     }
 
     private String formatLocation(Location location) {
@@ -426,7 +490,7 @@ public class UI2 extends AppCompatActivity {
             return "";
 
         return String.format(
-                "Координаты: ширина = %1$.4f, долгота = %2$.4f",
+                "шир = %1$.5f\nдол = %2$.5f",
                 location.getLatitude(), location.getLongitude(), new Date(
                         location.getTime()));
     }
@@ -437,4 +501,6 @@ public class UI2 extends AppCompatActivity {
         else
             requestPermissions();
     }
+
+
 }
