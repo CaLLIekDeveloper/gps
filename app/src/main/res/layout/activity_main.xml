@@ -11,19 +11,22 @@
         android:id="@+id/btn1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/provider_gps" />
+        android:text="@string/provider_gps"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/btn2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Compass" />
+        android:text="Compass"
+        android:visibility="gone"
+        tools:visibility="gone" />
 
     <Button
         android:id="@+id/btn3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="UI" />
+        android:text="GPS" />
 
     <Button
         android:id="@+id/btn4"
@@ -35,11 +38,15 @@
         android:id="@+id/btn5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Компасс версия 2" />
+        android:text="Компасс версия 2"
+        android:visibility="gone"
+        tools:visibility="gone" />
 
     <Button
         android:id="@+id/btn6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Компасс версия 3" />
+        android:text="Компасс версия 3"
+        android:visibility="gone"
+        tools:visibility="gone" />
 </LinearLayout>
