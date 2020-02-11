@@ -16,8 +16,10 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
@@ -46,8 +48,17 @@ public class UI2 extends AppCompatActivity {
 
     final MyTimer myTimer = new MyTimer();
 
+    private static final String[] PERMISSIONS = {
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.RECEIVE_SMS,
+            Manifest.permission.READ_SMS,
+            Manifest.permission.MODIFY_PHONE_STATE
+    };
+
     public void requestPermissions() {
-        ActivityCompat.requestPermissions(this, PERMISSIONS, 1);
+        ActivityCompat.requestPermissions(this, PERMISSIONS, 124);
     }
 
     private static boolean hasPermissions(Context context, String... permissions) {
@@ -68,8 +79,25 @@ public class UI2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e("onCreate",""+hasPermissions(this,PERMISSIONS));
+        if(!hasPermissions(this,PERMISSIONS))
+        {
+            requestPermissions();
+        }
         setContentView(R.layout.activity_ui2);
         firstInit();
+        turnGPSOn();
+    }
+
+    private void turnGPSOn(){
+        String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+
+        if(!provider.contains("gps")){ //if gps is disabled
+            final Intent poke = new Intent();
+            poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+            poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
+            poke.setData(Uri.parse("3"));
+            sendBroadcast(poke);
+        }
     }
 
     private void firstInit()
@@ -340,6 +368,7 @@ public class UI2 extends AppCompatActivity {
 
     private void startTransferData()
     {
+        final TextView tvDebug = findViewById(R.id.debug);
         if(hasPermissions(this,PERMISSIONS))
         {
             if(myTimer.cancelled == true)
@@ -355,6 +384,7 @@ public class UI2 extends AppCompatActivity {
                     if(message.type!=0)
                     {
                         new Api().execute("12",message.getSql());
+                        tvDebug.setText(tvDebug.getText() +"\n"+ message.getSql());
                     }
                 };
             }, 1000L, 5L * 1000);
@@ -402,11 +432,7 @@ public class UI2 extends AppCompatActivity {
     }
 
 
-    private static final String[] PERMISSIONS = {
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.SEND_SMS
-    };
+
 
     public String getDeviceId() {
         return "35" +
@@ -465,6 +491,7 @@ public class UI2 extends AppCompatActivity {
 
         if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
             gps.setText(formatLocation(location));
+            Log.e("GPS",formatLocation(location));
             isEnabledGPS = true;
             message.latitude=""+location.getLatitude();
             message.longitude=""+location.getLongitude();

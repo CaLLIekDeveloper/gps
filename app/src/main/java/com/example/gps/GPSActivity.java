@@ -9,9 +9,11 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -36,11 +38,21 @@ public class GPSActivity extends AppCompatActivity {
     StringBuilder sbGPS = new StringBuilder();
     StringBuilder sbNet = new StringBuilder();
 
+    private boolean isContinue = false;
+    private boolean isGPS = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps);
 
+        new GpsUtils(this).turnGPSOn(new GpsUtils.onGpsListener() {
+            @Override
+            public void gpsStatus(boolean isGPSEnable) {
+                // turn on GPS
+                isGPS = isGPSEnable;
+            }
+        });
 
         tvEnabledGPS = findViewById(R.id.tvEnabledGPS);
         tvStatusGPS = findViewById(R.id.tvStatusGPS);
@@ -51,6 +63,7 @@ public class GPSActivity extends AppCompatActivity {
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     }
+
 
     @Override
     protected void onResume() {
